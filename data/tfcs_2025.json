@@ -1,0 +1,52 @@
+[
+  {
+    "titulo": "Aplicação Móvel de Audiolivros Infantis",
+    "autor": "Tomás Silva, Carlota Montalvão",
+    "orientador": "Lúcio Studer, Martim Mourão",
+    "ano": 2025,
+    "tipo": "licenciatura",
+    "resumo": "Desenvolvimento de uma aplicação móvel para disponibilizar audiolivros infantis, em colaboração com a Associação Nacional de Glaucoma Pediátrico.",
+    "palavras_chave": "aplicação móvel, audiolivros, Flutter, iOS, Android",
+    "destaque": true
+  },
+  {
+    "titulo": "Aplicação para identificação de competências de diretores e alunos da Univ. Lusófona",
+    "autor": "Miguel Melo, Rodrigo Dias",
+    "orientador": "Bruno Saraiva, Pedro Alves",
+    "ano": 2025,
+    "tipo": "licenciatura",
+    "resumo": "Aplicação web para auxiliar na recolha de respostas e automatização da análise de competências de alunos e diretores.",
+    "palavras_chave": "competências, aplicação web, recursos humanos",
+    "destaque": false
+  },
+  {
+    "titulo": "IMOinvestor: Inovação no Investimento Imobiliário",
+    "autor": "Akashpreet Singh, Gabriel Almeida",
+    "orientador": "Pedro Perdigão",
+    "ano": 2025,
+    "tipo": "licenciatura",
+    "resumo": "Aplicação back-end para o setor imobiliário com cálculo de ROI, gestão de portfólios e acesso a dados fiscais.",
+    "palavras_chave": "imobiliário, back-end, ROI, investimento",
+    "destaque": false
+  },
+  {
+    "titulo": "Aplicações móveis para reabilitação",
+    "autor": "Mariana Livramento",
+    "orientador": "Pedro Alves, Sofia Naique",
+    "ano": 2025,
+    "tipo": "licenciatura",
+    "resumo": "Continuação do desenvolvimento de duas aplicações móveis: Rehabilita e Rexiga, em parceria com o Centro de Medicina de Reabilitação de Alcoitão.",
+    "palavras_chave": "reabilitação, Flutter, Android, iOS, saúde",
+    "destaque": true
+  },
+  {
+    "titulo": "Classificação de Pacientes e Previsão de Tempos de Espera através de Machine Learning",
+    "autor": "Ana Toscano",
+    "orientador": "Iolanda Velho, Sofia Naique",
+    "ano": 2025,
+    "tipo": "licenciatura",
+    "resumo": "Modelo preditivo de Machine Learning para classificação de pacientes e previsão de tempos de espera no Centro de Medicina de Reabilitação de Alcoitão.",
+    "palavras_chave": "machine learning, saúde, previsão, base de dados",
+    "destaque": false
+  }
+]
