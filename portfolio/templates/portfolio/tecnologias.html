@@ -1,0 +1,26 @@
+{% extends 'portfolio/base.html' %}
+
+{% block content %}
+<h2>Tecnologias</h2>
+<section>
+    {% for tec in tecnologias %}
+    <article>
+        <header>
+            <h3>{{ tec.nome }}</h3>
+            <p>{{ tec.get_categoria_display }} &mdash; Nível {{ tec.nivel_interesse }}/5</p>
+        </header>
+        {% if tec.descricao %}<p>{{ tec.descricao }}</p>{% endif %}
+        {% if tec.website_oficial %}
+        <section>
+            <h4>Website</h4>
+            <ul>
+                <li><a href="{{ tec.website_oficial }}" target="_blank">{{ tec.website_oficial }}</a></li>
+            </ul>
+        </section>
+        {% endif %}
+    </article>
+    {% empty %}
+    <p>Nenhuma tecnologia disponível.</p>
+    {% endfor %}
+</section>
+{% endblock %}

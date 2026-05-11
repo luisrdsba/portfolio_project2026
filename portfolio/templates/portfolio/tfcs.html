@@ -1,0 +1,44 @@
+{% extends 'portfolio/base.html' %}
+
+{% block content %}
+<h2>TFCs</h2>
+<section>
+    {% for tfc in tfcs %}
+    <article>
+        <header>
+            <h3>{{ tfc.titulo }}</h3>
+            <p>{{ tfc.autor }} &mdash; {{ tfc.ano }} &mdash; {{ tfc.get_tipo_display }}</p>
+        </header>
+        {% if tfc.resumo %}<p>{{ tfc.resumo }}</p>{% endif %}
+        {% if tfc.palavras_chave %}
+        <section>
+            <h4>Palavras-chave</h4>
+            <ul>
+                {% for palavra in tfc.palavras_chave.split %}
+                <li>{{ palavra }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+        {% if tfc.tecnologias.all %}
+        <section>
+            <h4>Tecnologias</h4>
+            <ul>
+                {% for tec in tfc.tecnologias.all %}
+                <li>{{ tec.nome }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+        {% if tfc.link %}
+        <section>
+            <h4>Documento</h4>
+            <ul><li><a href="{{ tfc.link }}" target="_blank">Ver TFC</a></li></ul>
+        </section>
+        {% endif %}
+    </article>
+    {% empty %}
+    <p>Nenhum TFC disponível.</p>
+    {% endfor %}
+</section>
+{% endblock %}

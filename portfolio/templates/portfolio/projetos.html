@@ -1,0 +1,37 @@
+{% extends 'portfolio/base.html' %}
+
+{% block content %}
+<h2>Projetos</h2>
+<section>
+    {% for projeto in projetos %}
+    <article>
+        <header>
+            <h3>{{ projeto.titulo }}</h3>
+            <p>{{ projeto.uc.nome }}{% if projeto.data_conclusao %} &mdash; {{ projeto.data_conclusao|date:"Y" }}{% endif %}</p>
+        </header>
+        <p>{{ projeto.descricao }}</p>
+        {% if projeto.tecnologias.all %}
+        <section>
+            <h4>Tecnologias</h4>
+            <ul>
+                {% for tec in projeto.tecnologias.all %}
+                <li>{{ tec.nome }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+        {% if projeto.repositorio_github or projeto.video_demo %}
+        <section>
+            <h4>Links</h4>
+            <ul>
+                {% if projeto.repositorio_github %}<li><a href="{{ projeto.repositorio_github }}" target="_blank">GitHub</a></li>{% endif %}
+                {% if projeto.video_demo %}<li><a href="{{ projeto.video_demo }}" target="_blank">Demo</a></li>{% endif %}
+            </ul>
+        </section>
+        {% endif %}
+    </article>
+    {% empty %}
+    <p>Nenhum projeto disponível.</p>
+    {% endfor %}
+</section>
+{% endblock %}

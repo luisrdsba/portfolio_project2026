@@ -16,6 +16,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'portfolio',
+    'escola',
 ]
 
 MIDDLEWARE = [
@@ -84,6 +85,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 import os
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Pasta no servidor onde os ficheiros vão ser guardados
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

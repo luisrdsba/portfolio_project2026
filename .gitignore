@@ -1,6 +1,6 @@
-venv/ 
-__pycache__/ 
-*.sqlite3 
-.claude/ 
-.claude/ 
-CLAUDE.md 
+venv/
+__pycache__/
+*.sqlite3
+.claude/
+CLAUDE.md
+staticfiles/
