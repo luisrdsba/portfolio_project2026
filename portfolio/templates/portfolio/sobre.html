@@ -1,0 +1,72 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+<h2>Sobre esta Aplicação</h2>
+
+<section>
+  <h3>1. Arquitetura MVT do Django</h3>
+  <img src='/media/sobre/mvt.jpg' alt='Diagrama MVT desenhado à mão' style='max-width:100%;'>
+  <p>A aplicação segue o padrão arquitetural <strong>MVT (Model-View-Template)</strong> do Django, uma adaptação do clássico MVC.</p>
+  <ul>
+    <li><strong>Model:</strong> camada de dados que define a estrutura das entidades na base de dados através do ORM do Django. Cada modelo é uma classe Python que herda de <code>models.Model</code> e cada atributo corresponde a uma coluna na tabela.</li>
+    <li><strong>View:</strong> camada de lógica de negócio. Recebe pedidos HTTP, interage com os modelos para obter ou modificar dados, e devolve uma resposta — tipicamente um template renderizado.</li>
+    <li><strong>Template:</strong> camada de apresentação. Ficheiros HTML com tags do Django Template Language que permitem renderizar dados dinâmicos vindos da View.</li>
+  </ul>
+  <p><strong>Fluxo de informação:</strong> O utilizador faz um pedido HTTP → o URL dispatcher identifica a rota → a View correspondente é executada → a View consulta os Models → os dados são passados ao Template → o HTML renderizado é devolvido ao utilizador.</p>
+
+  <h4>Video-tutorial</h4>
+  <iframe width='560' height='315' src='https://www.youtube.com/embed/VIDEO_ID_AQUI' frameborder='0' allowfullscreen></iframe>
+  <p><em>Video-tutorial sobre a criação de um formulário para novo projeto (a inserir após gravação).</em></p>
+</section>
+
+<section>
+  <h3>2. Modelação</h3>
+  <img src='/media/sobre/der.jpg' alt='Diagrama Entidade-Relação' style='max-width:100%;'>
+  <p>A aplicação tem <strong>10 entidades principais</strong>: Licenciatura, UnidadeCurricular, Docente, Projeto, Tecnologia, TipoTecnologia, TFC, Competencia, Formacao e MakingOf.</p>
+  <p>As relações utilizam <code>ForeignKey</code> para relações 1:N (por exemplo, uma Licenciatura tem muitas Unidades Curriculares) e <code>ManyToManyField</code> para relações N:M (por exemplo, um Projeto pode usar várias Tecnologias e uma Tecnologia pode estar em vários Projetos).</p>
+  <p>A entidade <strong>MakingOf</strong> documenta o processo de desenvolvimento, e a entidade extra <strong>TipoTecnologia</strong> permite categorizar as tecnologias.</p>
+</section>
+
+<section>
+  <h3>3. Tecnologias Utilizadas</h3>
+  {% for tipo, tecs in tecnologias_por_tipo.items %}
+    <h4>{{ tipo }}</h4>
+    <ul>
+      {% for tec in tecs %}
+        <li><strong>{{ tec.nome }}</strong>{% if tec.descricao %} — {{ tec.descricao }}{% endif %}</li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+</section>
+
+<section>
+  <h3>4. Estrutura de Navegação</h3>
+  <img src='/media/sobre/mapa.jpg' alt='Mapa de navegação da aplicação' style='max-width:100%;'>
+  <p>A aplicação organiza-se em torno de listagens (projetos, tecnologias, TFCs, unidades curriculares, competências, formações), cada uma com operações CRUD acessíveis através de botões. A página Sobre centraliza informação técnica e o Making-Of documenta o processo de desenvolvimento.</p>
+</section>
+
+<section>
+  <h3>5. Repositório GitHub</h3>
+  <p><a href='https://github.com/luisrdsba/portfolio_project2026' target='_blank'>github.com/luisrdsba/portfolio_project2026</a></p>
+  <p>O Git e o GitHub foram fundamentais para o desenvolvimento desta aplicação. Permitiram:</p>
+  <ul>
+    <li><strong>Controlo de versões:</strong> histórico completo de cada alteração, com possibilidade de reverter qualquer commit</li>
+    <li><strong>Backup na nuvem:</strong> o código fica seguro mesmo que algo aconteça ao computador local</li>
+    <li><strong>Trabalho entre máquinas:</strong> possibilidade de continuar o desenvolvimento em qualquer computador</li>
+    <li><strong>Colaboração futura:</strong> base preparada para trabalhar com outras pessoas no mesmo projeto</li>
+  </ul>
+</section>
+
+<section>
+  <h3>6. Making-Of</h3>
+  <p>O Making-Of é um diário de desenvolvimento que documenta as decisões, erros e aprendizagens ao longo do projeto. É uma das componentes mais importantes da avaliação.</p>
+  <h4>Últimas entradas:</h4>
+  <ul>
+    {% for mo in makingofs_recentes %}
+      <li><strong>{{ mo.titulo }}</strong> — {{ mo.data }} ({{ mo.get_entidade_relacionada_display }})</li>
+    {% empty %}
+      <li>Sem entradas ainda.</li>
+    {% endfor %}
+  </ul>
+  <p><a href='{% url "makingof" %}'>Ver todos os apontamentos do Making-Of →</a></p>
+</section>
+{% endblock %}

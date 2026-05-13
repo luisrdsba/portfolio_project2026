@@ -1,5 +1,6 @@
+from collections import defaultdict
 from django.shortcuts import render, redirect
-from .models import Projeto, Tecnologia, TFC, UnidadeCurricular, Competencia, Formacao
+from .models import Projeto, Tecnologia, TFC, UnidadeCurricular, Competencia, Formacao, MakingOf
 from .forms import ProjetoForm, TecnologiaForm, CompetenciaForm, FormacaoForm
 
 
@@ -135,3 +136,24 @@ def apaga_formacao_view(request, formacao_id):
     formacao = Formacao.objects.get(id=formacao_id)
     formacao.delete()
     return redirect('formacoes')
+
+
+def sobre_view(request):
+    tecnologias = Tecnologia.objects.select_related('tipo').all()
+    tecnologias_por_tipo = defaultdict(list)
+    for tec in tecnologias:
+        tipo_nome = tec.tipo.nome if tec.tipo else 'Sem categoria'
+        tecnologias_por_tipo[tipo_nome].append(tec)
+
+    makingofs_recentes = MakingOf.objects.all().order_by('-data')[:5]
+
+    context = {
+        'tecnologias_por_tipo': dict(tecnologias_por_tipo),
+        'makingofs_recentes': makingofs_recentes,
+    }
+    return render(request, 'portfolio/sobre.html', context)
+
+
+def makingof_view(request):
+    makingofs = MakingOf.objects.all()
+    return render(request, 'portfolio/makingof.html', {'makingofs': makingofs})

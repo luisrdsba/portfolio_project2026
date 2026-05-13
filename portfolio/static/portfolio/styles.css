@@ -18,6 +18,13 @@ article > section > ul { list-style: none; display: flex; flex-wrap: wrap; gap: 
 article > section > ul > li { background: #1e3a5f; color: white; padding: 6px 10px; border-radius: 999px; font-size: 13px; font-weight: 500; }
 .badge-secondary { background: #475569 !important; }
 footer { text-align: center; padding: 25px; background: #1e3a5f; color: #a8c0dc; margin-top: 40px; }
+main section { background: white; padding: 24px; border-radius: 12px; margin-bottom: 24px; border: 1px solid #d1d5db; }
+main section h3 { margin-bottom: 12px; color: #1e3a5f; }
+main section h4 { margin-top: 16px; margin-bottom: 8px; color: #2c4f7c; }
+main section p { margin-bottom: 10px; }
+main section ul { padding-left: 24px; margin-bottom: 10px; }
+main section img { display: block; margin: 12px 0; border-radius: 8px; }
+main section iframe { display: block; margin: 12px 0; max-width: 100%; }
 .errorlist { display: none; }
 button { padding: 6px 12px; margin-right: 8px; border: none; background: #1e3a5f; color: white; border-radius: 6px; cursor: pointer; }
 button:hover { background: #2c4f7c; }
