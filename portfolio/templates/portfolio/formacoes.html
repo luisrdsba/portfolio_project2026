@@ -1,0 +1,33 @@
+{% extends 'portfolio/base.html' %}
+
+{% block content %}
+<h2>Formações</h2>
+<a href='{% url "nova_formacao" %}'><button>Inserir nova Formação</button></a>
+<section>
+    {% for formacao in formacoes %}
+    <article>
+        <header>
+            <h3>{{ formacao.titulo }}</h3>
+            <p>{{ formacao.instituicao }} &mdash; {{ formacao.get_tipo_display }}</p>
+        </header>
+        {% if formacao.descricao %}<p>{{ formacao.descricao }}</p>{% endif %}
+        {% if formacao.tecnologias.all %}
+        <section>
+            <h4>Tecnologias</h4>
+            <ul>
+                {% for tec in formacao.tecnologias.all %}
+                <li>{{ tec.nome }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+        <p>
+            <a href='{% url "edita_formacao" formacao.id %}'><button>Editar</button></a>
+            <a href='{% url "apaga_formacao" formacao.id %}'><button>Apagar</button></a>
+        </p>
+    </article>
+    {% empty %}
+    <p>Nenhuma formação disponível.</p>
+    {% endfor %}
+</section>
+{% endblock %}
