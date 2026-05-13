@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Projeto, Tecnologia, TFC, UnidadeCurricular, Competencia
+from .forms import ProjetoForm
 
 
 def projetos_view(request):
@@ -25,3 +26,29 @@ def unidades_curriculares_view(request):
 def competencias_view(request):
     competencias = Competencia.objects.prefetch_related('projetos', 'tecnologias').all()
     return render(request, 'portfolio/competencias.html', {'competencias': competencias})
+
+
+def novo_projeto_view(request):
+    form = ProjetoForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form.save()
+        return redirect('projetos')
+    return render(request, 'portfolio/novo_projeto.html', {'form': form})
+
+
+def edita_projeto_view(request, projeto_id):
+    projeto = Projeto.objects.get(id=projeto_id)
+    if request.method == 'POST':
+        form = ProjetoForm(request.POST, request.FILES, instance=projeto)
+        if form.is_valid():
+            form.save()
+            return redirect('projetos')
+    else:
+        form = ProjetoForm(instance=projeto)
+    return render(request, 'portfolio/edita_projeto.html', {'form': form, 'projeto': projeto})
+
+
+def apaga_projeto_view(request, projeto_id):
+    projeto = Projeto.objects.get(id=projeto_id)
+    projeto.delete()
+    return redirect('projetos')

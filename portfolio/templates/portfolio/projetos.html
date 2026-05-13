@@ -2,6 +2,7 @@
 
 {% block content %}
 <h2>Projetos</h2>
+<a href='{% url "novo_projeto" %}'><button>Inserir novo Projeto</button></a>
 <section>
     {% for projeto in projetos %}
     <article>
@@ -30,6 +31,10 @@
         </section>
         {% endif %}
     </article>
+        <p>
+            <a href='{% url "edita_projeto" projeto.id %}'><button>Editar</button></a>
+            <a href='{% url "apaga_projeto" projeto.id %}'><button>Apagar</button></a>
+        </p>
     {% empty %}
     <p>Nenhum projeto disponível.</p>
     {% endfor %}

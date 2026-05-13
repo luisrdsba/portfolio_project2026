@@ -18,3 +18,6 @@ article > section > ul { list-style: none; display: flex; flex-wrap: wrap; gap: 
 article > section > ul > li { background: #1e3a5f; color: white; padding: 6px 10px; border-radius: 999px; font-size: 13px; font-weight: 500; }
 .badge-secondary { background: #475569 !important; }
 footer { text-align: center; padding: 25px; background: #1e3a5f; color: #a8c0dc; margin-top: 40px; }
+.errorlist { display: none; }
+button { padding: 6px 12px; margin-right: 8px; border: none; background: #1e3a5f; color: white; border-radius: 6px; cursor: pointer; }
+button:hover { background: #2c4f7c; }
