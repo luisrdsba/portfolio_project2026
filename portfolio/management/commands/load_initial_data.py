@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from portfolio.models import Licenciatura, Docente, UnidadeCurricular, Tecnologia, Projeto, Competencia
+from portfolio.models import Licenciatura, Docente, UnidadeCurricular, TipoTecnologia, Tecnologia, Projeto, Competencia
 
 
 class Command(BaseCommand):
@@ -100,13 +100,24 @@ class Command(BaseCommand):
         ucs['Programação Web'].docentes.add(lucio, joao)
         ucs['Bases de Dados'].docentes.add(lucio)
 
+        # Tipos de Tecnologia
+        tipos_nomes = [
+            'Frontend', 'Backend', 'Base de Dados',
+            'Storage', 'Ferramenta de Desenvolvimento', 'Outro',
+        ]
+        tipos = {}
+        for nome in tipos_nomes:
+            obj, created = TipoTecnologia.objects.get_or_create(nome=nome)
+            tipos[nome] = obj
+            self.stdout.write(f"{'Created' if created else 'Already exists'}: TipoTecnologia — {obj}")
+
         # Tecnologias
         tecnologias_data = [
-            {'nome': 'Python',  'categoria': 'linguagem'},
-            {'nome': 'Django',  'categoria': 'framework'},
-            {'nome': 'HTML',    'categoria': 'linguagem'},
-            {'nome': 'CSS',     'categoria': 'linguagem'},
-            {'nome': 'Git',     'categoria': 'ferramenta'},
+            {'nome': 'Python',  'categoria': 'linguagem', 'tipo': 'Backend'},
+            {'nome': 'Django',  'categoria': 'framework', 'tipo': 'Backend'},
+            {'nome': 'HTML',    'categoria': 'linguagem', 'tipo': 'Frontend'},
+            {'nome': 'CSS',     'categoria': 'linguagem', 'tipo': 'Frontend'},
+            {'nome': 'Git',     'categoria': 'ferramenta','tipo': 'Ferramenta de Desenvolvimento'},
         ]
 
         tecnologias = {}
@@ -118,8 +129,10 @@ class Command(BaseCommand):
                     'nivel_interesse': 3,
                 }
             )
+            tec.tipo = tipos[data['tipo']]
+            tec.save()
             tecnologias[data['nome']] = tec
-            self.stdout.write(f"{'Created' if created else 'Already exists'}: Tecnologia — {tec}")
+            self.stdout.write(f"{'Created' if created else 'Updated'}: Tecnologia — {tec}")
 
         # Projeto
         projeto, created = Projeto.objects.get_or_create(

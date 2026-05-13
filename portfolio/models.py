@@ -57,6 +57,19 @@ class UnidadeCurricular(models.Model):
         ordering = ['ano', 'semestre', 'nome']
 
 
+class TipoTecnologia(models.Model):
+    nome = models.CharField(max_length=50)
+    descricao = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.nome
+
+    class Meta:
+        verbose_name = 'Tipo de Tecnologia'
+        verbose_name_plural = 'Tipos de Tecnologia'
+        ordering = ['nome']
+
+
 class Tecnologia(models.Model):
     CATEGORIA_CHOICES = [
         ('linguagem', 'Linguagem de Programação'),
@@ -85,6 +98,7 @@ class Tecnologia(models.Model):
         verbose_name="Nível de interesse / proficiência"
     )
     destaque = models.BooleanField(default=False, verbose_name="Tecnologia em destaque")
+    tipo = models.ForeignKey(TipoTecnologia, on_delete=models.SET_NULL, null=True, blank=True, related_name='tecnologias')
 
     def __str__(self):
         return self.nome
