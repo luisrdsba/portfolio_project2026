@@ -1,5 +1,42 @@
 {% extends 'portfolio/base.html' %}
+{% load markdownify %}
+
 {% block content %}
-<h2>Making-Of</h2>
-<p>Em construção.</p>
+<h2>Making-Of — Diário de Desenvolvimento</h2>
+<p class='makingof-intro'>Este é o registo do processo de desenvolvimento desta aplicação. Inclui decisões tomadas, dificuldades encontradas, erros e respetivas correções, e reflexões sobre o uso de ferramentas de IA.</p>
+
+<section class='makingof-lista'>
+  {% for mo in makingofs %}
+    <article class='makingof-entry'>
+      <header>
+        <h3>{{ mo.titulo }}</h3>
+        <p class='meta'>
+          <span class='data'>{{ mo.data }}</span> ·
+          <span class='entidade'>{{ mo.get_entidade_relacionada_display }}</span>
+        </p>
+      </header>
+
+      {% if mo.fotografia %}
+        <img src='{{ mo.fotografia.url }}' alt='{{ mo.titulo }}' class='makingof-img'>
+      {% endif %}
+
+      <div class='makingof-content'>
+        <h4>Descrição / Decisões tomadas</h4>
+        <div class='markdown-content'>{{ mo.descricao|markdownify }}</div>
+
+        {% if mo.erros_correcoes %}
+          <h4>Erros encontrados e correções</h4>
+          <div class='markdown-content'>{{ mo.erros_correcoes|markdownify }}</div>
+        {% endif %}
+
+        {% if mo.uso_ia %}
+          <h4>Uso de ferramentas de IA</h4>
+          <div class='markdown-content'>{{ mo.uso_ia|markdownify }}</div>
+        {% endif %}
+      </div>
+    </article>
+  {% empty %}
+    <p>Ainda não existem entradas no Making-Of.</p>
+  {% endfor %}
+</section>
 {% endblock %}

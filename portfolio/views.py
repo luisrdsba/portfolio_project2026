@@ -155,5 +155,5 @@ def sobre_view(request):
 
 
 def makingof_view(request):
-    makingofs = MakingOf.objects.all()
+    makingofs = MakingOf.objects.all().order_by('-data')
     return render(request, 'portfolio/makingof.html', {'makingofs': makingofs})
