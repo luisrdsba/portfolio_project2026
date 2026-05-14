@@ -1,0 +1,23 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+  <article>
+    <header>
+      <h2>{{ artigo.titulo }}</h2>
+      <p>Por <strong>{{ artigo.autor.username }}</strong> em {{ artigo.data_criacao|date:'d/m/Y H:i' }}</p>
+    </header>
+    {% if artigo.fotografia %}
+      <img src='{{ artigo.fotografia.url }}' alt='{{ artigo.titulo }}' style='max-width: 600px;'>
+    {% endif %}
+    <div style='margin: 16px 0;'>{{ artigo.texto|linebreaks }}</div>
+    {% if artigo.link_externo %}
+      <p><a href='{{ artigo.link_externo }}' target='_blank'>Link externo</a></p>
+    {% endif %}
+    {% if pode_editar %}
+      <p>
+        <a href='{% url "edita_artigo" artigo.id %}'><button>Editar</button></a>
+        <a href='{% url "apaga_artigo" artigo.id %}'><button>Apagar</button></a>
+      </p>
+    {% endif %}
+    <p><a href='{% url "artigos_lista" %}'>Voltar a lista</a></p>
+  </article>
+{% endblock %}
