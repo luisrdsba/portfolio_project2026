@@ -15,6 +15,7 @@
           <img src='{{ artigo.fotografia.url }}' alt='{{ artigo.titulo }}' style='max-width: 400px;'>
         {% endif %}
         <p>{{ artigo.texto|truncatewords:50 }}</p>
+        <p style='color: #6b7280; font-size: 13px;'>{{ artigo.likes.count }} gostos · {{ artigo.comentarios.count }} comentarios</p>
       </article>
     {% empty %}
       <p>Ainda nao ha artigos publicados.</p>

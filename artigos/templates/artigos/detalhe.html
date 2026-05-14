@@ -12,12 +12,49 @@
     {% if artigo.link_externo %}
       <p><a href='{{ artigo.link_externo }}' target='_blank'>Link externo</a></p>
     {% endif %}
+
+    <section style='margin: 20px 0; padding: 16px; background: #f3f4f6; border-radius: 8px;'>
+      <p><strong>{{ total_likes }}</strong> {% if total_likes == 1 %}gosto{% else %}gostos{% endif %}</p>
+      {% if ja_deu_like %}
+        <p>Ja gostaste deste artigo</p>
+      {% else %}
+        <form action='{% url "dar_like" artigo.id %}' method='post' style='display: inline;'>
+          {% csrf_token %}
+          <button type='submit'>Gostar</button>
+        </form>
+      {% endif %}
+    </section>
+
     {% if pode_editar %}
       <p>
         <a href='{% url "edita_artigo" artigo.id %}'><button>Editar</button></a>
         <a href='{% url "apaga_artigo" artigo.id %}'><button>Apagar</button></a>
       </p>
     {% endif %}
-    <p><a href='{% url "artigos_lista" %}'>Voltar a lista</a></p>
+
+    <section style='margin-top: 32px;'>
+      <h3>Comentarios ({{ comentarios|length }})</h3>
+
+      {% if request.user.is_authenticated %}
+        <form action='{% url "comentar" artigo.id %}' method='post' style='margin: 16px 0;'>
+          {% csrf_token %}
+          <p><textarea name='texto' rows='3' style='width: 100%; padding: 8px;' placeholder='Escreve um comentario...' required></textarea></p>
+          <button type='submit'>Comentar</button>
+        </form>
+      {% else %}
+        <p><a href='{% url "login" %}'>Faz login</a> para comentar.</p>
+      {% endif %}
+
+      {% for c in comentarios %}
+        <article style='background: white; padding: 12px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #d1d5db;'>
+          <p><strong>{{ c.autor.username }}</strong> <span style='color: #6b7280; font-size: 13px;'>{{ c.data|date:'d/m/Y H:i' }}</span></p>
+          <p>{{ c.texto|linebreaks }}</p>
+        </article>
+      {% empty %}
+        <p>Sem comentarios ainda.</p>
+      {% endfor %}
+    </section>
+
+    <p style='margin-top: 24px;'><a href='{% url "artigos_lista" %}'>Voltar a lista</a></p>
   </article>
 {% endblock %}
