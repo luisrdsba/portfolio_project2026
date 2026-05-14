@@ -1,17 +1,30 @@
 from collections import defaultdict
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from .models import Projeto, Tecnologia, TFC, UnidadeCurricular, Competencia, Formacao, MakingOf
 from .forms import ProjetoForm, TecnologiaForm, CompetenciaForm, FormacaoForm
 
 
+def is_gestor(user):
+    return user.is_authenticated and user.groups.filter(name='gestor-portfolio').exists()
+
+
 def projetos_view(request):
     projetos = Projeto.objects.select_related('uc').prefetch_related('tecnologias').all()
-    return render(request, 'portfolio/projetos.html', {'projetos': projetos})
+    context = {
+        'projetos': projetos,
+        'is_gestor': is_gestor(request.user),
+    }
+    return render(request, 'portfolio/projetos.html', context)
 
 
 def tecnologias_view(request):
     tecnologias = Tecnologia.objects.all()
-    return render(request, 'portfolio/tecnologias.html', {'tecnologias': tecnologias})
+    context = {
+        'tecnologias': tecnologias,
+        'is_gestor': is_gestor(request.user),
+    }
+    return render(request, 'portfolio/tecnologias.html', context)
 
 
 def tfcs_view(request):
@@ -26,15 +39,26 @@ def unidades_curriculares_view(request):
 
 def competencias_view(request):
     competencias = Competencia.objects.prefetch_related('projetos', 'tecnologias').all()
-    return render(request, 'portfolio/competencias.html', {'competencias': competencias})
+    context = {
+        'competencias': competencias,
+        'is_gestor': is_gestor(request.user),
+    }
+    return render(request, 'portfolio/competencias.html', context)
 
 
 def formacoes_view(request):
     formacoes = Formacao.objects.prefetch_related('tecnologias').all()
-    return render(request, 'portfolio/formacoes.html', {'formacoes': formacoes})
+    context = {
+        'formacoes': formacoes,
+        'is_gestor': is_gestor(request.user),
+    }
+    return render(request, 'portfolio/formacoes.html', context)
 
 
+@login_required
 def novo_projeto_view(request):
+    if not is_gestor(request.user):
+        return redirect('projetos')
     form = ProjetoForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         form.save()
@@ -42,7 +66,10 @@ def novo_projeto_view(request):
     return render(request, 'portfolio/novo_projeto.html', {'form': form})
 
 
+@login_required
 def edita_projeto_view(request, projeto_id):
+    if not is_gestor(request.user):
+        return redirect('projetos')
     projeto = Projeto.objects.get(id=projeto_id)
     if request.method == 'POST':
         form = ProjetoForm(request.POST, request.FILES, instance=projeto)
@@ -54,13 +81,19 @@ def edita_projeto_view(request, projeto_id):
     return render(request, 'portfolio/edita_projeto.html', {'form': form, 'projeto': projeto})
 
 
+@login_required
 def apaga_projeto_view(request, projeto_id):
+    if not is_gestor(request.user):
+        return redirect('projetos')
     projeto = Projeto.objects.get(id=projeto_id)
     projeto.delete()
     return redirect('projetos')
 
 
+@login_required
 def nova_tecnologia_view(request):
+    if not is_gestor(request.user):
+        return redirect('tecnologias')
     form = TecnologiaForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         form.save()
@@ -68,7 +101,10 @@ def nova_tecnologia_view(request):
     return render(request, 'portfolio/nova_tecnologia.html', {'form': form})
 
 
+@login_required
 def edita_tecnologia_view(request, tecnologia_id):
+    if not is_gestor(request.user):
+        return redirect('tecnologias')
     tecnologia = Tecnologia.objects.get(id=tecnologia_id)
     if request.method == 'POST':
         form = TecnologiaForm(request.POST, request.FILES, instance=tecnologia)
@@ -80,13 +116,19 @@ def edita_tecnologia_view(request, tecnologia_id):
     return render(request, 'portfolio/edita_tecnologia.html', {'form': form, 'tecnologia': tecnologia})
 
 
+@login_required
 def apaga_tecnologia_view(request, tecnologia_id):
+    if not is_gestor(request.user):
+        return redirect('tecnologias')
     tecnologia = Tecnologia.objects.get(id=tecnologia_id)
     tecnologia.delete()
     return redirect('tecnologias')
 
 
+@login_required
 def nova_competencia_view(request):
+    if not is_gestor(request.user):
+        return redirect('competencias')
     form = CompetenciaForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         form.save()
@@ -94,7 +136,10 @@ def nova_competencia_view(request):
     return render(request, 'portfolio/nova_competencia.html', {'form': form})
 
 
+@login_required
 def edita_competencia_view(request, competencia_id):
+    if not is_gestor(request.user):
+        return redirect('competencias')
     competencia = Competencia.objects.get(id=competencia_id)
     if request.method == 'POST':
         form = CompetenciaForm(request.POST, request.FILES, instance=competencia)
@@ -106,13 +151,19 @@ def edita_competencia_view(request, competencia_id):
     return render(request, 'portfolio/edita_competencia.html', {'form': form, 'competencia': competencia})
 
 
+@login_required
 def apaga_competencia_view(request, competencia_id):
+    if not is_gestor(request.user):
+        return redirect('competencias')
     competencia = Competencia.objects.get(id=competencia_id)
     competencia.delete()
     return redirect('competencias')
 
 
+@login_required
 def nova_formacao_view(request):
+    if not is_gestor(request.user):
+        return redirect('formacoes')
     form = FormacaoForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         form.save()
@@ -120,7 +171,10 @@ def nova_formacao_view(request):
     return render(request, 'portfolio/nova_formacao.html', {'form': form})
 
 
+@login_required
 def edita_formacao_view(request, formacao_id):
+    if not is_gestor(request.user):
+        return redirect('formacoes')
     formacao = Formacao.objects.get(id=formacao_id)
     if request.method == 'POST':
         form = FormacaoForm(request.POST, request.FILES, instance=formacao)
@@ -132,7 +186,10 @@ def edita_formacao_view(request, formacao_id):
     return render(request, 'portfolio/edita_formacao.html', {'form': form, 'formacao': formacao})
 
 
+@login_required
 def apaga_formacao_view(request, formacao_id):
+    if not is_gestor(request.user):
+        return redirect('formacoes')
     formacao = Formacao.objects.get(id=formacao_id)
     formacao.delete()
     return redirect('formacoes')

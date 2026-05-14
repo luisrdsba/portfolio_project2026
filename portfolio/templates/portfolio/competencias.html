@@ -2,7 +2,9 @@
 
 {% block content %}
 <h2>Competências</h2>
+{% if is_gestor %}
 <a href='{% url "nova_competencia" %}'><button>Inserir nova Competência</button></a>
+{% endif %}
 <section>
     {% for competencia in competencias %}
     <article>
@@ -32,10 +34,12 @@
         </section>
         {% endif %}
     </article>
+        {% if is_gestor %}
         <p>
             <a href='{% url "edita_competencia" competencia.id %}'><button>Editar</button></a>
             <a href='{% url "apaga_competencia" competencia.id %}'><button>Apagar</button></a>
         </p>
+        {% endif %}
     {% empty %}
     <p>Nenhuma competência disponível.</p>
     {% endfor %}

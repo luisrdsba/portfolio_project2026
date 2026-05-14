@@ -2,7 +2,9 @@
 
 {% block content %}
 <h2>Tecnologias</h2>
+{% if is_gestor %}
 <a href='{% url "nova_tecnologia" %}'><button>Inserir nova Tecnologia</button></a>
+{% endif %}
 <section>
     {% for tec in tecnologias %}
     <article>
@@ -20,10 +22,12 @@
         </section>
         {% endif %}
     </article>
+        {% if is_gestor %}
         <p>
             <a href='{% url "edita_tecnologia" tec.id %}'><button>Editar</button></a>
             <a href='{% url "apaga_tecnologia" tec.id %}'><button>Apagar</button></a>
         </p>
+        {% endif %}
     {% empty %}
     <p>Nenhuma tecnologia disponível.</p>
     {% endfor %}
