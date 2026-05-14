@@ -17,8 +17,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'portfolio',
     'escola',
+    'accounts',
     'markdownify.apps.MarkdownifyConfig',
 ]
+
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/portfolio/projetos'
+LOGOUT_REDIRECT_URL = '/portfolio/projetos'
 
 MARKDOWNIFY = {
     'default': {

@@ -1,0 +1,14 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+  <h2>Login</h2>
+  {% if mensagem %}
+    <p style='color: #b91c1c;'>{{ mensagem }}</p>
+  {% endif %}
+  <form action='{% url "login" %}' method='post' style='max-width: 400px;'>
+    {% csrf_token %}
+    <p><input type='text' name='username' placeholder='Username' required style='width: 100%; padding: 8px;'></p>
+    <p><input type='password' name='password' placeholder='Password' required style='width: 100%; padding: 8px;'></p>
+    <button type='submit'>Entrar</button>
+  </form>
+  <p style='margin-top: 16px;'>Nao tens conta? <a href='{% url "registo" %}'>Regista-te aqui</a></p>
+{% endblock %}

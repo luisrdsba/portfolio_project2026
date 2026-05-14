@@ -1,0 +1,10 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+  <h2>Registo</h2>
+  <form action='{% url "registo" %}' method='post' style='max-width: 400px;'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type='submit'>Criar conta</button>
+  </form>
+  <p style='margin-top: 16px;'>Ja tens conta? <a href='{% url "login" %}'>Faz login</a></p>
+{% endblock %}
