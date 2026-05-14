@@ -5,6 +5,7 @@ from portfolio.models import (
     Projeto, Tecnologia, Competencia, Formacao, TipoTecnologia,
     UnidadeCurricular, TFC, Docente, Licenciatura, MakingOf
 )
+from artigos.models import Artigo
 
 
 class Command(BaseCommand):
@@ -39,5 +40,18 @@ class Command(BaseCommand):
             self.stdout.write('Utilizador gestor criado (password: gestor123)')
         gestor_user.groups.add(grupo)
         self.stdout.write('Utilizador gestor adicionado ao grupo')
+
+        grupo_autores, created = Group.objects.get_or_create(name='autores')
+        status = 'Criado' if created else 'Ja existia'
+        self.stdout.write(f'{status}: grupo autores')
+
+        ct_artigo = ContentType.objects.get_for_model(Artigo)
+        perms_autores = Permission.objects.filter(
+            content_type=ct_artigo,
+            codename__in=['view_artigo', 'add_artigo', 'change_artigo']
+        )
+        for perm in perms_autores:
+            grupo_autores.permissions.add(perm)
+        self.stdout.write('Permissoes adicionadas ao grupo autores')
 
         self.stdout.write(self.style.SUCCESS('Grupo configurado com sucesso.'))

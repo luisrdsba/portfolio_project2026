@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.core.mail import send_mail
 from django.urls import reverse
 from .forms import RegistoForm
@@ -30,8 +30,10 @@ def registo_view(request):
         form = RegistoForm(request.POST)
         if form.is_valid():
             user = form.save()
+            grupo_autores, _ = Group.objects.get_or_create(name='autores')
+            user.groups.add(grupo_autores)
             login(request, user)
-            return redirect('projetos')
+            return redirect('artigos_lista')
     else:
         form = RegistoForm()
     return render(request, 'accounts/registo.html', {'form': form})
