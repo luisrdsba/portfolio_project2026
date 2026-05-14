@@ -11,4 +11,6 @@
     <button type='submit'>Entrar</button>
   </form>
   <p style='margin-top: 16px;'>Nao tens conta? <a href='{% url "registo" %}'>Regista-te aqui</a></p>
+  <hr style='margin: 24px 0;'>
+  <p>Ou <a href='{% url "magic_link_pedir" %}'>entra com Magic Link</a> (sem password)</p>
 {% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+  <h2>Entrar com Magic Link</h2>
+  <p>Insere o teu email e enviamos-te um link para entrares sem password.</p>
+  {% if mensagem %}
+    <p style='color: #15803d; background: #dcfce7; padding: 10px; border-radius: 6px;'>{{ mensagem }}</p>
+  {% endif %}
+  <form action='{% url "magic_link_pedir" %}' method='post' style='max-width: 400px;'>
+    {% csrf_token %}
+    <p><input type='email' name='email' placeholder='O teu email' required style='width: 100%; padding: 8px;'></p>
+    <button type='submit'>Enviar link</button>
+  </form>
+  <p style='margin-top: 16px;'><a href='{% url "login" %}'>Voltar ao login normal</a></p>
+{% endblock %}
