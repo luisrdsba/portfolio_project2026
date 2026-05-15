@@ -1,6 +1,11 @@
 from pathlib import Path
+import environ
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 SECRET_KEY = 'django-insecure-g@83&#@wr@!tm*=8bq4y3!@p4t6yet-gi9u!faa1pa(ak)fr$+'
 
@@ -63,10 +68,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': env.db('DATABASE_URL')
 }
 
 
@@ -96,8 +98,6 @@ USE_TZ = True
 
 
 STATIC_URL = 'static/'
-
-import os
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
