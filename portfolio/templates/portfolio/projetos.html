@@ -12,6 +12,7 @@
             <h3>{{ projeto.titulo }}</h3>
             <p>{{ projeto.uc.nome }}{% if projeto.data_conclusao %} &mdash; {{ projeto.data_conclusao|date:"Y" }}{% endif %}</p>
         </header>
+        {% if projeto.imagem %}<img src='{{ projeto.imagem.url }}' alt='{{ projeto.titulo }}' style='max-width: 300px; border-radius: 8px;'>{% endif %}
         <p>{{ projeto.descricao }}</p>
         {% if projeto.tecnologias.all %}
         <section>

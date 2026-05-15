@@ -9,6 +9,7 @@
             <h3>{% if uc.sigla %}{{ uc.sigla }} — {% endif %}{{ uc.nome }}</h3>
             <p>{{ uc.licenciatura.nome }} &mdash; {{ uc.ano }}º ano &mdash; {{ uc.get_semestre_display }} &mdash; {{ uc.ects }} ECTS</p>
         </header>
+        {% if uc.imagem %}<img src='{{ uc.imagem.url }}' alt='{{ uc.nome }}' style='max-width: 300px; border-radius: 8px;'>{% endif %}
         {% if uc.descricao %}<p>{{ uc.descricao }}</p>{% endif %}
         {% if uc.docentes.all %}
         <section>

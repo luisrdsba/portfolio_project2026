@@ -12,6 +12,7 @@
             <h3>{{ tec.nome }}</h3>
             <p>{{ tec.get_categoria_display }} &mdash; Nível {{ tec.nivel_interesse }}/5</p>
         </header>
+        {% if tec.logo %}<img src='{{ tec.logo.url }}' alt='{{ tec.nome }}' style='max-width: 300px; border-radius: 8px;'>{% endif %}
         {% if tec.descricao %}<p>{{ tec.descricao }}</p>{% endif %}
         {% if tec.website_oficial %}
         <section>
